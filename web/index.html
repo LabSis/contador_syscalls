@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestión de Ransomware</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Gestión de Ransomware</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <h3>Ejecución</h3>
+                    <div class="form-group">
+                        <label for="slc-ransomware">Ransomware</label>
+                        <select id="slc-ransomware" class="form-control">
+                            <option>Ransomware 1</option>
+                            <option>Ransomware 2</option>
+                            <option>Ransomware 3</option>
+                        </select>
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="txa-descripcion">Descripción</label>
+                        <textarea class="form-control" id="txa-descripcion"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label id="slc-cantidad-datos-a-cifrar">Cantidad de datos a cifrar</label>
+                        <select class="form-control">
+                            <option>30 MB</option>
+                            <option>50 MB</option>
+                            <option>100 MB</option>
+                            <option>500 MB</option>
+                            <option>1 GB</option>
+                            <option>2 GB</option>
+                            <option>5 GB</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label id="slc-cantidad-archivos">Cantidad de archivos</label>
+                        <select class="form-control">
+                            <option>10</option>
+                            <option>50</option>
+                            <option>100</option>
+                            <option>1000</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary float-right" id="btn-cifrar">Cifrar</button>
+                </div>
+            </div>
+            <div class="card mt-2 mb-4">
+                <div class="card-body">
+                    <h3>Resultados</h3>
+                    <label>Tabla de Syscalls</label>
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>read</th>
+                                <th>write</th>
+                                <th>fork</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    350
+                                </td>
+                                <td>
+                                    352
+                                </td>
+                                <td>
+                                    1
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Procesamiento</label>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>% user</th>
+                                        <th>% system</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Y
+                                        </td>
+                                        <td>
+                                            X
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Disco</label>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>% iowait</th>
+                                        <th>% idle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Y
+                                        </td>
+                                        <td>
+                                            X
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Memoria</label>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>memused (MB)</th>
+                                        <th>% memused</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Y
+                                        </td>
+                                        <td>
+                                            X
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
