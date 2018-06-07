@@ -6,10 +6,14 @@
 package controladores;
 
 import com.google.gson.Gson;
+import datos.GeneradorDeArchivos;
 import datos.Ransomware;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +44,7 @@ public class ControladorRansomware extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorRansomware</title>");            
+            out.println("<title>Servlet ControladorRansomware</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorRansomware at " + request.getContextPath() + "</h1>");
@@ -62,7 +66,7 @@ public class ControladorRansomware extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<Ransomware> ransomwares = datos.Datos.cargarRansomwares();
-        
+
         String json = new Gson().toJson(ransomwares);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -80,17 +84,40 @@ public class ControladorRansomware extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        String nombreRansomware = request.getParameter("id-ransomware");
+        String cantidadDatosACifrarString = request.getParameter("cantidad-datos-a-cifrar");
+        String cantidadArchivosString = request.getParameter("cantidad-archivos");
+        int cantidadDatosACifrar = 30;
+        int cantidadArchivos = 5;
+        
+        try {
+            cantidadDatosACifrar = Integer.parseInt(cantidadDatosACifrarString);
+        } catch (NumberFormatException nfe) {
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        }
+        try {
+            cantidadArchivos = Integer.parseInt(cantidadArchivosString);
+        } catch (NumberFormatException nfe) {
+
+        }
+        String directorio = "test/";
+        File directorioFile = new File(directorio);
+        if (!directorioFile.exists()) {
+            directorioFile.createNewFile();
+        }
+        GeneradorDeArchivos ga = new GeneradorDeArchivos();
+        ga.generar(directorio, cantidadDatosACifrar, cantidadArchivos);
+        
+        Ransomware r = datos.Datos.getRansomware(nombreRansomware);
+        try {
+            r.encrypt(directorio);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (directorioFile.exists()) {
+            directorioFile.delete();
+        }
+    }
 
 }

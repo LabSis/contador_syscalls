@@ -10,16 +10,16 @@ public class GeneradorDeArchivos {
     public GeneradorDeArchivos() {
     }
     
-    public void generar(long tamTotalMB, long cantidadArchivos) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public void generar(String directorio, long tamTotalMB, long cantidadArchivos) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         long tamPorArchivo = (tamTotalMB / cantidadArchivos) * 1000 * 1000;
         for (int i = 1; i <= cantidadArchivos; i++) {
-            RandomAccessFile f = new RandomAccessFile("a" + i, "rw");
+            RandomAccessFile f = new RandomAccessFile(directorio + "a" + i, "rw");
            f.setLength(tamPorArchivo);
         }
     }
     
     public static void main(String args[]) throws UnsupportedEncodingException, IOException {
         GeneradorDeArchivos ga = new GeneradorDeArchivos();
-        ga.generar(30, 5);
+        ga.generar("", 30, 5);
     }
 }

@@ -14,4 +14,13 @@ public class Datos {
         ransomwares.add(r2);
         return ransomwares;
     }
+    
+    public static Ransomware getRansomware(String nombre){
+        for(Ransomware ransomware : ransomwares) {
+            if (ransomware.getName().equals(nombre)) {
+                return ransomware;
+            }
+        }
+        return null;
+    }
 }
