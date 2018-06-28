@@ -7,7 +7,6 @@ package controladores;
 
 import com.google.gson.Gson;
 import datos.GeneradorDeArchivos;
-import datos.Prueba;
 import datos.Ransomware;
 import java.io.File;
 import java.io.IOException;
@@ -84,9 +83,9 @@ public class ControladorRansomware extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombreRansomware = request.getParameter("id-ransomware");
-        String cantidadDatosACifrarString = request.getParameter("cantidad-datos-a-cifrar");
-        String cantidadArchivosString = request.getParameter("cantidad-archivos");
+        String nombreRansomware = request.getParameter("id_ransomware");
+        String cantidadDatosACifrarString = request.getParameter("cantidad_datos_a_cifrar");
+        String cantidadArchivosString = request.getParameter("cantidad_archivos");
         int cantidadDatosACifrar = 30;
         int cantidadArchivos = 5;
         
@@ -100,7 +99,8 @@ public class ControladorRansomware extends HttpServlet {
         } catch (NumberFormatException nfe) {
 
         }
-        String directorio = "test/";
+        
+        String directorio = "/home/gochi/Proyectos/GestionRansomware/test/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
             directorioFile.createNewFile();
@@ -108,7 +108,7 @@ public class ControladorRansomware extends HttpServlet {
         GeneradorDeArchivos ga = new GeneradorDeArchivos();
         ga.generar(directorio, cantidadDatosACifrar, cantidadArchivos);
         
-        Ransomware r = datos.Datos.getRansomware(nombreRansomware);
+        /*Ransomware r = datos.Datos.getRansomware(nombreRansomware);
         try {
             r.encrypt(directorio);
         } catch (Exception ex) {
@@ -117,7 +117,7 @@ public class ControladorRansomware extends HttpServlet {
         
         if (directorioFile.exists()) {
             directorioFile.delete();
-        }
+        }*/
     }
 
 }
