@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.TreeMap;
 
 public abstract class Ransomware {
-
+    
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("description")
@@ -18,6 +19,14 @@ public abstract class Ransomware {
         this.parameters = new TreeMap<>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
