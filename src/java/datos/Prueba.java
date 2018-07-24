@@ -1,5 +1,7 @@
 package datos;
 
+import ransomware.Ransomware;
+
 /**
  *
  * @author fdrcbrtl

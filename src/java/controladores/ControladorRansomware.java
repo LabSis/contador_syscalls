@@ -7,7 +7,7 @@ package controladores;
 
 import com.google.gson.Gson;
 import datos.GeneradorDeArchivos;
-import datos.Ransomware;
+import ransomware.Ransomware;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,12 +83,19 @@ public class ControladorRansomware extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombreRansomware = request.getParameter("id_ransomware");
+        String idRansomwareString = request.getParameter("id_ransomware");
         String cantidadDatosACifrarString = request.getParameter("cantidad_datos_a_cifrar");
         String cantidadArchivosString = request.getParameter("cantidad_archivos");
         int cantidadDatosACifrar = 30;
         int cantidadArchivos = 5;
-        
+        int idRansomware = 1;
+
+        try {
+            idRansomware = Integer.parseInt(idRansomwareString);
+        } catch (NumberFormatException nfe) {
+
+        }
+
         try {
             cantidadDatosACifrar = Integer.parseInt(cantidadDatosACifrarString);
         } catch (NumberFormatException nfe) {
@@ -99,7 +106,7 @@ public class ControladorRansomware extends HttpServlet {
         } catch (NumberFormatException nfe) {
 
         }
-        
+
         String directorio = "/home/gochi/Proyectos/GestionRansomware/test/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
@@ -107,17 +114,19 @@ public class ControladorRansomware extends HttpServlet {
         }
         GeneradorDeArchivos ga = new GeneradorDeArchivos();
         ga.generar(directorio, cantidadDatosACifrar, cantidadArchivos);
-        
-        /*Ransomware r = datos.Datos.getRansomware(nombreRansomware);
-        try {
-            r.encrypt(directorio);
-        } catch (Exception ex) {
-            Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
+
+        Ransomware r = datos.Datos.getRansomware(idRansomware);
+        if (r != null) {
+            try {
+                r.encrypt(directorio);
+            } catch (Exception ex) {
+                Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+
         if (directorioFile.exists()) {
             directorioFile.delete();
-        }*/
+        }
     }
 
 }

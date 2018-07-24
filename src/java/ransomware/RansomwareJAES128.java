@@ -1,4 +1,4 @@
-package datos;
+package ransomware;
 
 import com.google.gson.annotations.Expose;
 import java.io.File;
@@ -14,8 +14,8 @@ public class RansomwareJAES128 extends Ransomware {
     private transient Cipher cipher;
     private transient String victimDir;
 
-    public RansomwareJAES128(String nombre, String descripcion) {
-        super(nombre, descripcion);
+    public RansomwareJAES128(int id, String nombre, String descripcion) {
+        super(id, nombre, descripcion);
     }
 
     @Override

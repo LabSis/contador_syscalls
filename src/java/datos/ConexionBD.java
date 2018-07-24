@@ -1,5 +1,7 @@
 package datos;
 
+import ransomware.Jamsomware;
+import ransomware.Ransomware;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -137,7 +139,7 @@ public class ConexionBD {
     }
 
     public static void main(String args[]) {
-        Ransomware r = new Jamsomware("fedee", "Descripcion");
+        Ransomware r = new Jamsomware(1, "fedee", "Descripcion");
         r.setId(4);
         r.addParameter("clave", "4960520");
         r.addParameter("clave1", "49");

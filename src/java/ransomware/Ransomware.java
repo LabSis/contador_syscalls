@@ -1,4 +1,4 @@
-package datos;
+package ransomware;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +13,8 @@ public abstract class Ransomware {
     private String description;
     private transient TreeMap<String, String> parameters;
 
-    public Ransomware(String name, String description) {
+    public Ransomware(int id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.parameters = new TreeMap<>();
@@ -60,6 +61,11 @@ public abstract class Ransomware {
         return this.name;
     }
 
+    /**
+     * 
+     * @param victimDir directorio víctima. Se asume que el directorio existe y está sanitizado.
+     * @throws Exception 
+     */
     public abstract void encrypt(String victimDir) throws Exception;
 
     public abstract void decrypt(String victimDir) throws Exception;
