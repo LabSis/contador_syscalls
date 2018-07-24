@@ -5,6 +5,7 @@
 
         // Eventos.
         $("#btn-cifrar").click(function () {
+            $("#card-resultados").addClass("hidden");
             var ransomware = $("#slc-ransomware option:selected").val();
             var tamTotalACifrar = $("#slc-cantidad-datos-a-cifrar option:selected").val();
             var cantidadArchivos = $("#slc-cantidad-archivos option:selected").val();
@@ -17,6 +18,7 @@
                     cantidad_archivos: cantidadArchivos
                 },
                 success: function (r) {
+                    $("#card-resultados").removeClass("hidden");
                     var $tblSyscalls = $("#tbl-syscalls");
                     var syscalls = r.syscalls;
                     for (var i = 0; i < syscalls.length; i++) {
@@ -51,6 +53,13 @@
         }
 
         // Setup.
+        $(document).ajaxStart(function (args) {
+            $(".cargando").show();
+        });
+        $(document).ajaxStop(function (args) {
+            $(".cargando").hide();
+        });
+
         $.ajax({
             url: "/GestionRansomware/ControladorRansomware",
             type: "get",

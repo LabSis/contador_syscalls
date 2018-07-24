@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import ransomware.Ransomware;
@@ -34,6 +36,13 @@ public class Estadisticas {
             salidaStrace += line + "\n";
         }
         ArrayList<SyscallResultado> syscalls = getSyscalls();
+        Collections.sort(syscalls, new Comparator<SyscallResultado>() {
+            @Override
+            public int compare(SyscallResultado t, SyscallResultado t1) {
+                return t1.getCantidad() - t.getCantidad();
+            }
+            
+        });
         Resultado resultado = new Resultado(syscalls, null, null, null);
         return resultado;
     }
