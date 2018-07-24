@@ -1,5 +1,6 @@
 package ransomware;
 
+import datos.Configuracion;
 import ransomware.Ransomware;
 
 public class Jamsomware extends Ransomware {
@@ -10,7 +11,7 @@ public class Jamsomware extends Ransomware {
 
     @Override
     public Process encrypt(String directorioVictima) throws Exception {
-        return Runtime.getRuntime().exec("strace python3 /home/gochi/Proyectos/GestionRansomware/jamsomware.py --dir " + directorioVictima);
+        return Runtime.getRuntime().exec("strace python3 " + Configuracion.DIRECTORIO_RANSOMWARES + "jamsomware.py --dir " + directorioVictima);
 
         //p.waitFor(10, TimeUnit.SECONDS);
 

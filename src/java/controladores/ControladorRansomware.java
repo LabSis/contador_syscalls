@@ -6,6 +6,7 @@
 package controladores;
 
 import com.google.gson.Gson;
+import datos.Configuracion;
 import datos.GeneradorDeArchivos;
 import datos.Resultado;
 import estadisticas.Estadisticas;
@@ -109,7 +110,7 @@ public class ControladorRansomware extends HttpServlet {
 
         }
 
-        String directorio = "/home/gochi/Proyectos/GestionRansomware/test/";
+        String directorio = Configuracion.DIRECTORIO_EJECUCION_CIFRADO + "test/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
             directorioFile.mkdir();
