@@ -7,17 +7,27 @@ import java.io.UnsupportedEncodingException;
 
 public class GeneradorDeArchivos {
 
+    char[] alfabeto = "ab".toCharArray();
+
     public GeneradorDeArchivos() {
     }
-    
+
     public void generar(String directorio, long tamTotalMB, long cantidadArchivos) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         long tamPorArchivo = (tamTotalMB / cantidadArchivos) * 1000 * 1000;
         for (int i = 1; i <= cantidadArchivos; i++) {
             RandomAccessFile f = new RandomAccessFile(directorio + "a" + i, "rw");
-           f.setLength(tamPorArchivo);
+            for (int j = 0; j < tamPorArchivo; j += 1000) {
+                String renglon = "";
+                for(int k = 0; k < 999; k++) {
+                    int indice = (int) (Math.random() * (double) alfabeto.length);
+                    renglon += alfabeto[indice];
+                }
+                renglon += "\n";
+                f.writeUTF(renglon);
+            }
         }
     }
-    
+
     public static void main(String args[]) throws UnsupportedEncodingException, IOException {
         GeneradorDeArchivos ga = new GeneradorDeArchivos();
         ga.generar("", 30, 5);

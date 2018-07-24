@@ -63,10 +63,11 @@ public abstract class Ransomware {
 
     /**
      * 
-     * @param victimDir directorio víctima. Se asume que el directorio existe y está sanitizado.
+     * @param directorioVictima directorio víctima. Se asume que el directorio existe y está sanitizado.
+     * @return 
      * @throws Exception 
      */
-    public abstract void encrypt(String victimDir) throws Exception;
+    public abstract Process encrypt(String directorioVictima) throws Exception;
 
-    public abstract void decrypt(String victimDir) throws Exception;
+    public abstract Process decrypt(String directorioVictima) throws Exception;
 }

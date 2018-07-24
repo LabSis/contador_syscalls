@@ -8,7 +8,6 @@
             var ransomware = $("#slc-ransomware option:selected").val();
             var tamTotalACifrar = $("#slc-cantidad-datos-a-cifrar option:selected").val();
             var cantidadArchivos = $("#slc-cantidad-archivos option:selected").val();
-            console.log(cantidadArchivos);
             $.ajax({
                 url: "/GestionRansomware/ControladorRansomware",
                 type: "post",
@@ -16,6 +15,25 @@
                     id_ransomware: ransomware,
                     cantidad_datos_a_cifrar: tamTotalACifrar,
                     cantidad_archivos: cantidadArchivos
+                },
+                success: function (r) {
+                    var $tblSyscalls = $("#tbl-syscalls");
+                    var syscalls = r.syscalls;
+                    for (var i = 0; i < syscalls.length; i++) {
+                        var $trSyscall = $("<tr></tr>");
+                        var $tdNombreSyscall = $("<td></td>");
+                        var $tdCantidadSyscall = $("<td></td>");
+
+                        var syscall = syscalls[i];
+                        $tdNombreSyscall.text(syscall.syscall);
+                        $tdCantidadSyscall.text(syscall.cantidad);
+
+                        $trSyscall.append($tdNombreSyscall);
+                        $trSyscall.append($tdCantidadSyscall);
+
+                        $tblSyscalls.append($trSyscall);
+                    }
+
                 }
             });
         });

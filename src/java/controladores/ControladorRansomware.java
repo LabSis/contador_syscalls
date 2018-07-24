@@ -7,6 +7,8 @@ package controladores;
 
 import com.google.gson.Gson;
 import datos.GeneradorDeArchivos;
+import datos.Resultado;
+import estadisticas.Estadisticas;
 import ransomware.Ransomware;
 import java.io.File;
 import java.io.IOException;
@@ -110,22 +112,33 @@ public class ControladorRansomware extends HttpServlet {
         String directorio = "/home/gochi/Proyectos/GestionRansomware/test/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
-            directorioFile.createNewFile();
+            directorioFile.mkdir();
         }
         GeneradorDeArchivos ga = new GeneradorDeArchivos();
         ga.generar(directorio, cantidadDatosACifrar, cantidadArchivos);
 
         Ransomware r = datos.Datos.getRansomware(idRansomware);
+        Resultado resultado = null;
         if (r != null) {
             try {
-                r.encrypt(directorio);
+                Estadisticas estadisticas = new Estadisticas(r);
+                resultado = estadisticas.ejecutar(directorio);
             } catch (Exception ex) {
                 Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
         if (directorioFile.exists()) {
+            for (String nombreArchivo : directorioFile.list()) {
+                File archivo = new File(directorioFile.getPath(), nombreArchivo);
+                archivo.delete();
+            }
             directorioFile.delete();
+        }
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        if (resultado != null) {
+            String json = new Gson().toJson(resultado);
+            response.getWriter().write(json);
         }
     }
 
