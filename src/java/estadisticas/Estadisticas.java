@@ -15,12 +15,12 @@ import ransomware.Ransomware;
 public class Estadisticas {
 
     protected Ransomware ransomware;
-    protected String salidaStrace;
+    protected String salidaResumidaStrace;
     protected HashMap<String, Integer> mapaSyscalls;
 
     public Estadisticas(Ransomware ransomware) {
         this.ransomware = ransomware;
-        this.salidaStrace = "";
+        this.salidaResumidaStrace = "";
 
     }
 
@@ -30,10 +30,23 @@ public class Estadisticas {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(stderr));
 
+        boolean comienzaTabla = false;
+        boolean leyendoTabla = false;
         String line = reader.readLine();
         while (line != null) {
+            if (leyendoTabla) {
+                if (line.contains("------")) {
+                    break;
+                }
+                salidaResumidaStrace += line + "\n";
+            }
+            if (comienzaTabla) {
+                leyendoTabla = true;
+            }
+            if (line.contains("syscall")) {
+                comienzaTabla = true;
+            }
             line = reader.readLine();
-            salidaStrace += line + "\n";
         }
         ArrayList<SyscallResultado> syscalls = getSyscalls();
         Collections.sort(syscalls, new Comparator<SyscallResultado>() {
@@ -41,7 +54,7 @@ public class Estadisticas {
             public int compare(SyscallResultado t, SyscallResultado t1) {
                 return t1.getCantidad() - t.getCantidad();
             }
-            
+
         });
         Resultado resultado = new Resultado(syscalls, null, null, null);
         return resultado;
@@ -50,18 +63,17 @@ public class Estadisticas {
     public ArrayList<SyscallResultado> getSyscalls() {
         mapaSyscalls = new HashMap<>();
         ArrayList<SyscallResultado> syscalls = new ArrayList<>();
-        String renglones[] = salidaStrace.split("\n");
+        String renglones[] = salidaResumidaStrace.split("\n");
         for (int i = 0; i < renglones.length; i++) {
             String renglon = renglones[i];
-            int indiceParentesis = renglon.indexOf("(");
-            if (indiceParentesis > 0) {
-                String nombreSyscall = renglon.substring(0, indiceParentesis);
-                Integer cantidad = mapaSyscalls.get(nombreSyscall);
-                if (cantidad != null) {
-                    mapaSyscalls.put(nombreSyscall, cantidad + 1);
-                } else {
-                    mapaSyscalls.put(nombreSyscall, 1);
-                }
+            String celdas[] = renglon.split("\\s+");
+
+            if (celdas.length > 4) {
+                String nombreSyscall = celdas[celdas.length - 1];
+                System.out.println(nombreSyscall);
+                mapaSyscalls.put(nombreSyscall, Integer.parseInt(celdas[4]));
+            } else {
+                throw new RuntimeException("Error al generar las estadísticas. Faltan columnas.");
             }
         }
 

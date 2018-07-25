@@ -5,7 +5,7 @@
 
         // Eventos.
         $("#btn-cifrar").click(function () {
-            $("#card-resultados").addClass("hidden");
+            $("#card-resultados").addClass("d-none");
             var ransomware = $("#slc-ransomware option:selected").val();
             var tamTotalACifrar = $("#slc-cantidad-datos-a-cifrar option:selected").val();
             var cantidadArchivos = $("#slc-cantidad-archivos option:selected").val();
@@ -18,8 +18,9 @@
                     cantidad_archivos: cantidadArchivos
                 },
                 success: function (r) {
-                    $("#card-resultados").removeClass("hidden");
-                    var $tblSyscalls = $("#tbl-syscalls");
+                    var $tblSyscalls = $("#tbl-syscalls tbody");
+                    $tblSyscalls.empty();
+                    $("#card-resultados").removeClass("d-none");
                     var syscalls = r.syscalls;
                     for (var i = 0; i < syscalls.length; i++) {
                         var $trSyscall = $("<tr></tr>");

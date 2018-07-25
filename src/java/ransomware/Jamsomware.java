@@ -11,7 +11,7 @@ public class Jamsomware extends Ransomware {
 
     @Override
     public Process encrypt(String directorioVictima) throws Exception {
-        return Runtime.getRuntime().exec("strace python3 " + Configuracion.DIRECTORIO_RANSOMWARES + "jamsomware.py --dir " + directorioVictima);
+        return Runtime.getRuntime().exec("strace -f -c -S calls python3 " + Configuracion.DIRECTORIO_RANSOMWARES + "jamsomware.py --dir " + directorioVictima);
 
         //p.waitFor(10, TimeUnit.SECONDS);
 
