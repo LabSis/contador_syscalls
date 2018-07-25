@@ -23,11 +23,11 @@ public class ProcesamientoResultado {
         this.user = porcentajeUsuario;
     }
 
-    public double getProcentajeSistema() {
+    public double getPorcentajeSistema() {
         return system;
     }
 
-    public void setProcentajeSistema(double procentajeSistema) {
+    public void setPorcentajeSistema(double procentajeSistema) {
         this.system = procentajeSistema;
     }
 

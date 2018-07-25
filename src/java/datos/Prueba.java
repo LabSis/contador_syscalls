@@ -1,5 +1,6 @@
 package datos;
 
+import java.util.Date;
 import ransomware.Ransomware;
 
 /**
@@ -14,6 +15,8 @@ public class Prueba {
     private int cantidadArchivos;
     private boolean detectorHabilitado;
     private boolean deteccionPositiva;
+    private long tiempoEjecucion;
+    private Date fechaHora;
     private Resultado resultado;
 
     public Prueba(Ransomware ransomware, int cantidadDatos, int cantidadArchivos, boolean detectorHabilitado, Resultado resultado) {
@@ -80,5 +83,21 @@ public class Prueba {
 
     public void setResultado(Resultado resultado) {
         this.resultado = resultado;
+    }
+
+    public long getTiempoEjecucion() {
+        return tiempoEjecucion;
+    }
+
+    public void setTiempoEjecucion(long tiempoEjecucion) {
+        this.tiempoEjecucion = tiempoEjecucion;
+    }
+
+    public Date getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(Date fechaHora) {
+        this.fechaHora = fechaHora;
     }
 }

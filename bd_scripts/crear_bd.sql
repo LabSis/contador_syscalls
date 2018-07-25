@@ -25,6 +25,8 @@ CREATE TABLE pruebas(
     cantidad_archivos INT,
     detector_habilitado BIT,
     deteccion_positiva BIT,
+    fecha_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tiempo_ejecucion_ms LONG NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_ransomware) REFERENCES ransomwares (id)
 );
@@ -64,3 +66,6 @@ CREATE TABLE memoria_resultados(
     PRIMARY KEY(id),
     FOREIGN KEY(id_prueba) REFERENCES pruebas (id)
 );
+
+INSERT INTO ransomwares (nombre,descripcion) VALUES ("JAES-128", "Ransomware de cifrado simétrico AES - 128 bits para análisis académico. Parámetros: clave=1234567812345678");
+INSERT INTO ransomwares (nombre,descripcion) VALUES ("Jamsomware", "Ransomware adaptado y descargado desde https://github.com/julupu/jamsomware");

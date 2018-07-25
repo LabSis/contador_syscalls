@@ -6,8 +6,10 @@
 package controladores;
 
 import com.google.gson.Gson;
+import datos.ConexionBD;
 import datos.Configuracion;
 import datos.GeneradorDeArchivos;
+import datos.Prueba;
 import datos.Resultado;
 import estadisticas.Estadisticas;
 import ransomware.Ransomware;
@@ -22,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ransomware.Jamsomware;
 
 /**
  *
@@ -86,6 +89,7 @@ public class ControladorRansomware extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ConexionBD bd = new ConexionBD();
         String idRansomwareString = request.getParameter("id_ransomware");
         String cantidadDatosACifrarString = request.getParameter("cantidad_datos_a_cifrar");
         String cantidadArchivosString = request.getParameter("cantidad_archivos");
@@ -116,8 +120,8 @@ public class ControladorRansomware extends HttpServlet {
             dejarArchivosCreados = Boolean.parseBoolean(dejarArchivosCreadosString);
         } catch (NumberFormatException nfe) {
 
-        }
-
+        }       
+        
         String nombreDirectorio = "test_" + ((int) (Math.random() * 1000)) + "_" + System.currentTimeMillis();
         String directorio = Configuracion.DIRECTORIO_EJECUCION_CIFRADO + nombreDirectorio + "/";
         File directorioFile = new File(directorio);
@@ -128,11 +132,18 @@ public class ControladorRansomware extends HttpServlet {
         ga.generar(directorio, cantidadDatosACifrar, cantidadArchivos);
 
         Ransomware r = datos.Datos.getRansomware(idRansomware);
+        Prueba prueba = new Prueba(r,cantidadDatosACifrar, cantidadArchivos, false);
+        long tI = System.currentTimeMillis();
         Resultado resultado = null;
         if (r != null) {
             try {
                 Estadisticas estadisticas = new Estadisticas(r);
                 resultado = estadisticas.ejecutar(directorio);
+                long tF = System.currentTimeMillis();
+                long msEjecucion = tF - tI;
+                prueba.setTiempoEjecucion(msEjecucion);
+                prueba.setResultado(resultado);
+                bd.registrarPrueba(prueba);
             } catch (Exception ex) {
                 Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
             }
