@@ -110,7 +110,8 @@ public class ControladorRansomware extends HttpServlet {
 
         }
 
-        String directorio = Configuracion.DIRECTORIO_EJECUCION_CIFRADO + "test/";
+        String nombreDirectorio = "test_" + ((int)(Math.random() * 1000)) + "_" + System.currentTimeMillis();
+        String directorio = Configuracion.DIRECTORIO_EJECUCION_CIFRADO + nombreDirectorio + "/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
             directorioFile.mkdir();
