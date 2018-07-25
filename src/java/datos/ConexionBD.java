@@ -77,12 +77,12 @@ public class ConexionBD {
             } catch (SQLException ex1) {
                 Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex1);
             }
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
-    
-    public void registrarPrueba(Prueba prueba){
+
+    public void registrarPrueba(Prueba prueba) {
         try {
             this.conectar();
             this.connection.setAutoCommit(false);
@@ -90,40 +90,40 @@ public class ConexionBD {
             ps.setInt(1, prueba.getRansomware().getId());
             ps.setInt(2, prueba.getCantidadDatos());
             ps.setInt(3, prueba.getCantidadArchivos());
-            ps.setInt(4, (prueba.isDetectorHabilitado())? 1 : 0);
-            ps.setInt(5, (prueba.isDeteccionPositiva())? 1 : 0);
+            ps.setInt(4, (prueba.isDetectorHabilitado()) ? 1 : 0);
+            ps.setInt(5, (prueba.isDeteccionPositiva()) ? 1 : 0);
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if(keys.next()){
+            if (keys.next()) {
                 int idPrueba = keys.getInt(1);
                 PreparedStatement psSyscall = this.connection.prepareStatement("INSERT INTO syscall_resultados (syscall,cantidad,id_prueba) VALUES (?,?,?)");
-                for(SyscallResultado syscall : prueba.getResultado().getSyscalls()){                    
+                for (SyscallResultado syscall : prueba.getResultado().getSyscalls()) {
                     psSyscall.setString(1, syscall.getSyscall());
                     psSyscall.setInt(2, syscall.getCantidad());
                     psSyscall.setInt(3, idPrueba);
                     psSyscall.execute();
                 }
-                
+
                 PreparedStatement psProcesamiento = this.connection.prepareStatement("INSERT INTO procesamiento_resultados (user, system, id_prueba) VALUES (?,?,?)");
                 psProcesamiento.setDouble(1, prueba.getResultado().getProcesamiento().getPorcentajeUsuario());
                 psProcesamiento.setDouble(2, prueba.getResultado().getProcesamiento().getProcentajeSistema());
                 psProcesamiento.setInt(3, idPrueba);
                 psProcesamiento.execute();
-                
+
                 PreparedStatement psDisco = this.connection.prepareStatement("INSERT INTO disco_resultados (iowait, idle, id_prueba) VALUES (?,?,?)");
                 psDisco.setDouble(1, prueba.getResultado().getDisco().getIowait());
                 psDisco.setDouble(2, prueba.getResultado().getDisco().getIdle());
                 psDisco.setInt(3, idPrueba);
                 psDisco.execute();
-                
+
                 PreparedStatement psMemoria = this.connection.prepareStatement("INSERT INTO memoria_resultados (memused, porcentaje_memused, id_prueba) VALUES (?,?,?)");
                 psMemoria.setDouble(1, prueba.getResultado().getMemoria().getMemused());
                 psMemoria.setDouble(2, prueba.getResultado().getMemoria().getPorcentajeMemused());
                 psMemoria.setInt(3, idPrueba);
                 psMemoria.execute();
-                
+
                 this.connection.commit();
-            }else{
+            } else {
                 this.connection.rollback();
             }
         } catch (SQLException ex) {
@@ -133,34 +133,86 @@ public class ConexionBD {
                 Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex1);
             }
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
     }
 
+    public ArrayList<Prueba> getPruebas() {
+        ArrayList<Prueba> pruebas = new ArrayList<>();
+        try {
+            this.conectar();
+            String consultaPruebas = "SELECT p.id,p.id_ransomware,r.nombre,r.descripcion,"
+                    + "p.cantidad_datos,p.cantidad_archivos,p.detector_habilitado,p.deteccion_positiva,"
+                    + "d.iowait,d.idle,m.memused,m.porcentaje_memused,pro.user,pro.system "
+                    + "FROM pruebas AS p INNER JOIN ransomwares AS r ON p.id_ransomware=r.id "
+                    + "INNER JOIN disco_resultados AS d ON p.id=d.id_prueba "
+                    + "INNER JOIN memoria_resultados AS m ON p.id=m.id_prueba "
+                    + "INNER JOIN procesamiento_resultados AS pro ON p.id=pro.id_prueba";
+            PreparedStatement psPruebas = this.connection.prepareStatement(consultaPruebas);
+
+            String consultaSyscalls = "SELECT syscall,cantidad "
+                    + "FROM syscall_resultados "
+                    + "WHERE id_prueba=?";
+            PreparedStatement psSyscalls = this.connection.prepareStatement(consultaSyscalls);
+
+            ResultSet pruebasResultSet = psPruebas.executeQuery();
+            while (pruebasResultSet.next()) {
+                int id = pruebasResultSet.getInt("id");
+                int idRansomware = pruebasResultSet.getInt("id_ransomware");
+                String nombreRansomware = pruebasResultSet.getString("nombre");
+                String descripcionRansomware = pruebasResultSet.getString("descripcion");
+                int cantidadDatos = pruebasResultSet.getInt("cantidad_datos");
+                int cantidadArchivos = pruebasResultSet.getInt("cantidad_archivos");
+                boolean detectorHabilitado = pruebasResultSet.getBoolean("detector_habilitado");
+                boolean deteccionPositiva = pruebasResultSet.getBoolean("deteccion_positiva");
+
+                //Corregir esto.
+                Ransomware ransomware = new Jamsomware(idRansomware, nombreRansomware, descripcionRansomware);
+                Prueba prueba = new Prueba(ransomware, cantidadDatos, cantidadArchivos, detectorHabilitado);
+                prueba.setDeteccionPositiva(deteccionPositiva);
+
+                /* Resultado */
+                double iowait = pruebasResultSet.getDouble("iowait");
+                double idle = pruebasResultSet.getDouble("idle");
+                DiscoResultado discoResultado = new DiscoResultado(iowait, idle);
+                
+                double user = pruebasResultSet.getDouble("user");
+                double system = pruebasResultSet.getDouble("system");
+                ProcesamientoResultado procesamientoResultado = new ProcesamientoResultado(user, system);
+                
+                double memused = pruebasResultSet.getDouble("memused");
+                double porcentajeMemused = pruebasResultSet.getDouble("porcentaje_memused");
+                MemoriaResultado memoriaResultado = new MemoriaResultado(memused, porcentajeMemused);
+                
+                ArrayList<SyscallResultado> syscallResultados = new ArrayList<>();
+                psSyscalls.setInt(1, id);
+                ResultSet syscallsResultSet = psSyscalls.executeQuery();
+                while(syscallsResultSet.next()){
+                    String syscall = syscallsResultSet.getString("syscall");
+                    int cantidad = syscallsResultSet.getInt("cantidad");
+                    SyscallResultado syscallResultado = new SyscallResultado(syscall, cantidad);
+                    syscallResultados.add(syscallResultado);
+                }
+                
+                Resultado resultado = new Resultado(syscallResultados, procesamientoResultado, discoResultado, memoriaResultado);
+                prueba.setResultado(resultado);
+                pruebas.add(prueba);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            this.cerrarConexion();
+        }
+        return pruebas;
+    }
+
     public static void main(String args[]) {
-        Ransomware r = new Jamsomware(1, "fedee", "Descripcion");
-        r.setId(4);
-        r.addParameter("clave", "4960520");
-        r.addParameter("clave1", "49");
-        r.addParameter("clave2", "49605");
         
-        SyscallResultado sr = new SyscallResultado("read", 125);
-        SyscallResultado sr2 = new SyscallResultado("write", 256);
-        ArrayList<SyscallResultado> syscallResultados = new ArrayList<>();
-        syscallResultados.add(sr);
-        syscallResultados.add(sr2);
-        
-        ProcesamientoResultado pr = new ProcesamientoResultado(0.25, 0.75);
-        DiscoResultado dr = new DiscoResultado(26.7, 95.6);
-        MemoriaResultado mr = new MemoriaResultado(236, 66.5);
-        Resultado resultado = new Resultado(syscallResultados, pr, dr, mr);
-        
-        Prueba prueba = new Prueba(r, 80, 2, false);
-        prueba.setResultado(resultado);
-        
+
         ConexionBD conexionBD = new ConexionBD();
-        conexionBD.registrarPrueba(prueba);
+        conexionBD.getPruebas();
 
     }
 }
