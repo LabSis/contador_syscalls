@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 
 public class GeneradorDeArchivos {
 
-    char[] alfabeto = "ab".toCharArray();
+    char[] alfabeto = "abcdefghijklmnopqrtuvswxyz".toCharArray();
 
     public GeneradorDeArchivos() {
     }

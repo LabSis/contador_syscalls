@@ -70,7 +70,6 @@ public class Estadisticas {
 
             if (celdas.length > 4) {
                 String nombreSyscall = celdas[celdas.length - 1];
-                System.out.println(nombreSyscall);
                 mapaSyscalls.put(nombreSyscall, Integer.parseInt(celdas[4]));
             } else {
                 throw new RuntimeException("Error al generar las estadísticas. Faltan columnas.");

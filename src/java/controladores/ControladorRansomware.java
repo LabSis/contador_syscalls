@@ -89,9 +89,11 @@ public class ControladorRansomware extends HttpServlet {
         String idRansomwareString = request.getParameter("id_ransomware");
         String cantidadDatosACifrarString = request.getParameter("cantidad_datos_a_cifrar");
         String cantidadArchivosString = request.getParameter("cantidad_archivos");
+        String dejarArchivosCreadosString = request.getParameter("dejar_archivos_creados");
         int cantidadDatosACifrar = 30;
         int cantidadArchivos = 5;
         int idRansomware = 1;
+        boolean dejarArchivosCreados = false;
 
         try {
             idRansomware = Integer.parseInt(idRansomwareString);
@@ -110,7 +112,13 @@ public class ControladorRansomware extends HttpServlet {
 
         }
 
-        String nombreDirectorio = "test_" + ((int)(Math.random() * 1000)) + "_" + System.currentTimeMillis();
+        try {
+            dejarArchivosCreados = Boolean.parseBoolean(dejarArchivosCreadosString);
+        } catch (NumberFormatException nfe) {
+
+        }
+
+        String nombreDirectorio = "test_" + ((int) (Math.random() * 1000)) + "_" + System.currentTimeMillis();
         String directorio = Configuracion.DIRECTORIO_EJECUCION_CIFRADO + nombreDirectorio + "/";
         File directorioFile = new File(directorio);
         if (!directorioFile.exists()) {
@@ -129,7 +137,7 @@ public class ControladorRansomware extends HttpServlet {
                 Logger.getLogger(ControladorRansomware.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (directorioFile.exists()) {
+        if (!dejarArchivosCreados && directorioFile.exists()) {
             for (String nombreArchivo : directorioFile.list()) {
                 File archivo = new File(directorioFile.getPath(), nombreArchivo);
                 archivo.delete();
