@@ -28,13 +28,19 @@
                         var $trSyscall = $("<tr></tr>");
                         var $tdNombreSyscall = $("<td></td>");
                         var $tdCantidadSyscall = $("<td></td>");
+                        var $tdCantidadYTamanio = $("<td></td>");
+                        var $tdCantidadYCantidadTotal = $("<td></td>");
 
                         var syscall = syscalls[i];
                         $tdNombreSyscall.text(syscall.syscall);
                         $tdCantidadSyscall.text(syscall.cantidad);
+                        $tdCantidadYTamanio.text(syscall.k);
+                        $tdCantidadYCantidadTotal.text(syscall.q);
 
                         $trSyscall.append($tdNombreSyscall);
                         $trSyscall.append($tdCantidadSyscall);
+                        $trSyscall.append($tdCantidadYTamanio);
+                        $trSyscall.append($tdCantidadYCantidadTotal);
 
                         $tblSyscalls.append($trSyscall);
                     }

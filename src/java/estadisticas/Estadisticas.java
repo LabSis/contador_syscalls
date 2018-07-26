@@ -15,13 +15,14 @@ import ransomware.Ransomware;
 public class Estadisticas {
 
     protected Ransomware ransomware;
+    protected long cantidadDatosACifrarBytes;
     protected String salidaResumidaStrace;
     protected HashMap<String, Integer> mapaSyscalls;
 
-    public Estadisticas(Ransomware ransomware) {
+    public Estadisticas(Ransomware ransomware, long cantidadDatosACifrarBytes) {
         this.ransomware = ransomware;
+        this.cantidadDatosACifrarBytes = cantidadDatosACifrarBytes;
         this.salidaResumidaStrace = "";
-
     }
 
     public Resultado ejecutar(String directorioVictima) throws Exception {
@@ -48,29 +49,38 @@ public class Estadisticas {
             }
             line = reader.readLine();
         }
-        ArrayList<SyscallResultado> syscalls = getSyscalls();
+        Resultado resultado = new Resultado(null, null, null, null);
+        ArrayList<SyscallResultado> syscalls = getSyscalls(resultado);
         Collections.sort(syscalls, new Comparator<SyscallResultado>() {
             @Override
             public int compare(SyscallResultado t, SyscallResultado t1) {
                 return t1.getCantidad() - t.getCantidad();
             }
-
         });
-        Resultado resultado = new Resultado(syscalls, null, null, null);
+        resultado.setSyscalls(syscalls);
+
         return resultado;
     }
 
-    public ArrayList<SyscallResultado> getSyscalls() {
+    public ArrayList<SyscallResultado> getSyscalls(Resultado resultado) {
         mapaSyscalls = new HashMap<>();
         ArrayList<SyscallResultado> syscalls = new ArrayList<>();
         String renglones[] = salidaResumidaStrace.split("\n");
+        int totalCantidadSyscalls = 0;
         for (int i = 0; i < renglones.length; i++) {
-            String renglon = renglones[i];
+            String renglon = renglones[i].trim();
             String celdas[] = renglon.split("\\s+");
 
-            if (celdas.length > 4) {
+            if (celdas.length > 3) {
                 String nombreSyscall = celdas[celdas.length - 1];
-                mapaSyscalls.put(nombreSyscall, Integer.parseInt(celdas[4]));
+                try {
+                    int cantidad = Integer.parseInt(celdas[3]);
+                    mapaSyscalls.put(nombreSyscall, cantidad);
+                    totalCantidadSyscalls += cantidad;
+                } catch (NumberFormatException ex) {
+                    System.out.println(ex.getMessage());
+                    System.out.println(renglon);
+                }
             } else {
                 throw new RuntimeException("Error al generar las estadísticas. Faltan columnas.");
             }
@@ -80,8 +90,13 @@ public class Estadisticas {
             String nombreSyscall = entradaSyscall.getKey();
             Integer cantidadSyscall = entradaSyscall.getValue();
             SyscallResultado syscallResultado = new SyscallResultado(nombreSyscall, cantidadSyscall);
+            double k = (double) cantidadSyscall / (double) cantidadDatosACifrarBytes;
+            syscallResultado.setK(k);
+            double q = (double) cantidadSyscall / (double) totalCantidadSyscalls;
+            syscallResultado.setQ(q);
             syscalls.add(syscallResultado);
         }
+        resultado.setTotalCantidadSyscalls(totalCantidadSyscalls);
 
         return syscalls;
     }

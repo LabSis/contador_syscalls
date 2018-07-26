@@ -137,7 +137,7 @@ public class ControladorRansomware extends HttpServlet {
         Resultado resultado = null;
         if (r != null) {
             try {
-                Estadisticas estadisticas = new Estadisticas(r);
+                Estadisticas estadisticas = new Estadisticas(r, cantidadDatosACifrar * 1024  * 1024);
                 resultado = estadisticas.ejecutar(directorio);
                 long tF = System.currentTimeMillis();
                 long msEjecucion = tF - tI;
