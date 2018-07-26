@@ -2,8 +2,17 @@ $(document).ready(function () {
     //Variables
     var pruebas = [];
     var $tblPruebas = $("#tbl-pruebas");
+    var $tblSyscalls = $("#tbl-syscalls");
+    var $modalResultado = $("#modal-resultado");
     
     //Eventos
+    $(document).on("click", ".btn-ver-prueba", function(){
+        var prueba = $(this).data("prueba");
+        console.log(prueba);
+        renderizarResultado(prueba);
+        $modalResultado.modal();
+    });
+    
     
     //Funciones
     function obtenerPruebas(){
@@ -62,6 +71,7 @@ $(document).ready(function () {
                 var $tdBtn = $("<td></td>");
                 var $btnVer = $("<button>Ver</button>");                
                 $btnVer.addClass("btn btn-sm btn-secondary btn-ver-prueba");
+                $btnVer.data("prueba", prueba);
                 $tdBtn.append($btnVer);
                 $tr.append($tdBtn);
                 
@@ -73,6 +83,17 @@ $(document).ready(function () {
         }
     }
     
+    function renderizarResultado(prueba){
+        var syscalls = prueba.resultado.syscalls;
+        $tblSyscalls.find("tbody").empty();
+        for(var i=0; i < syscalls.length; i++){
+            var $tr = $("<tr></tr>");
+            $tr.append($("<td>" +syscalls[i].syscall + "</td>"));
+            $tr.append($("<td>" +syscalls[i].cantidad + "</td>"));
+            
+            $tblSyscalls.find("tbody").append($tr);
+        }
+    }
     //Setup
     obtenerPruebas();
 });

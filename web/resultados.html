@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Gestión de Ransomware - Resultados</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -34,7 +34,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Ransomeware</th>
+                        <th scope="col">Ransomware</th>
                         <th scope="col">MB</th>
                         <th scope="col">Cant. Archivos</th>
                         <th scope="col">Tiempo (ms)</th>
@@ -42,9 +42,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
+        </div>
+        <div class="modal fade" id="modal-resultado" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <table class="table table-bordered" id="tbl-syscalls">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Syscall</th>
+                                <th scope="col">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </body>
 </html>
