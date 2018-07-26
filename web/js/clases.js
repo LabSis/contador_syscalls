@@ -16,9 +16,11 @@ function Prueba(ransomware, cantidadDatos, cantidadArchivos, detectorHabilitado,
     this.resultado = resultado;
 }
 
-function Syscall(syscall, cantidad){
+function Syscall(syscall, cantidad, k, q){
     this.syscall = syscall;
     this.cantidad = cantidad;
+    this.k = k;
+    this.q = q;
 }
 
 function Procesamiento(user, system){

@@ -43,6 +43,8 @@ $(document).ready(function () {
                        var syscall = new Syscall();
                        syscall.syscall = pruebaJson.resultado.syscalls[j].syscall;
                        syscall.cantidad = pruebaJson.resultado.syscalls[j].cantidad;
+                       syscall.k = pruebaJson.resultado.syscalls[j].k;
+                       syscall.q = pruebaJson.resultado.syscalls[j].q;
                        syscalls.push(syscall);
                    }
                    
@@ -90,6 +92,8 @@ $(document).ready(function () {
             var $tr = $("<tr></tr>");
             $tr.append($("<td>" +syscalls[i].syscall + "</td>"));
             $tr.append($("<td>" +syscalls[i].cantidad + "</td>"));
+            $tr.append($("<td>" +syscalls[i].k + "</td>"));
+            $tr.append($("<td>" +syscalls[i].q + "</td>"));
             
             $tblSyscalls.find("tbody").append($tr);
         }

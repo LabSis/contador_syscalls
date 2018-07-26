@@ -98,11 +98,13 @@ public class ConexionBD {
             ResultSet keys = ps.getGeneratedKeys();
             if (keys.next()) {
                 int idPrueba = keys.getInt(1);
-                PreparedStatement psSyscall = this.connection.prepareStatement("INSERT INTO syscall_resultados (syscall,cantidad,id_prueba) VALUES (?,?,?)");
+                PreparedStatement psSyscall = this.connection.prepareStatement("INSERT INTO syscall_resultados (syscall,cantidad,k,q,id_prueba) VALUES (?,?,?,?,?)");
                 for (SyscallResultado syscall : prueba.getResultado().getSyscalls()) {
                     psSyscall.setString(1, syscall.getSyscall());
                     psSyscall.setInt(2, syscall.getCantidad());
-                    psSyscall.setInt(3, idPrueba);
+                    psSyscall.setDouble(3, syscall.getK());
+                    psSyscall.setDouble(4, syscall.getQ());
+                    psSyscall.setInt(5, idPrueba);
                     psSyscall.execute();
                 }
 
@@ -171,7 +173,7 @@ public class ConexionBD {
                     + "INNER JOIN procesamiento_resultados AS pro ON p.id=pro.id_prueba";
             PreparedStatement psPruebas = this.connection.prepareStatement(consultaPruebas);
 
-            String consultaSyscalls = "SELECT syscall,cantidad "
+            String consultaSyscalls = "SELECT syscall,cantidad,k,q "
                     + "FROM syscall_resultados "
                     + "WHERE id_prueba=?";
             PreparedStatement psSyscalls = this.connection.prepareStatement(consultaSyscalls);
@@ -215,7 +217,11 @@ public class ConexionBD {
                 while(syscallsResultSet.next()){
                     String syscall = syscallsResultSet.getString("syscall");
                     int cantidad = syscallsResultSet.getInt("cantidad");
+                    double k = syscallsResultSet.getDouble("k");
+                    double q = syscallsResultSet.getDouble("q");
                     SyscallResultado syscallResultado = new SyscallResultado(syscall, cantidad);
+                    syscallResultado.setK(k);
+                    syscallResultado.setQ(q);
                     syscallResultados.add(syscallResultado);
                 }
                 

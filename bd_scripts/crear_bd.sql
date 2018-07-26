@@ -35,6 +35,8 @@ CREATE TABLE syscall_resultados(
 	id INT NOT NULL AUTO_INCREMENT,
     syscall VARCHAR(50),
     cantidad INT,
+    q DOUBLE,
+    k DOUBLE,
     id_prueba INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_prueba) REFERENCES pruebas (id)
