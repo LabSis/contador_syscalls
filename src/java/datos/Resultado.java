@@ -7,10 +7,12 @@ import java.util.ArrayList;
  * @author fdrcbrtl
  */
 public class Resultado {
+
     private ArrayList<SyscallResultado> syscalls;
     private ProcesamientoResultado procesamiento;
     private DiscoResultado disco;
     private MemoriaResultado memoria;
+    private int totalCantidadSyscalls;
 
     public Resultado(ArrayList<SyscallResultado> syscalls, ProcesamientoResultado procesamiento, DiscoResultado disco, MemoriaResultado memoria) {
         this.syscalls = syscalls;
@@ -50,5 +52,13 @@ public class Resultado {
     public void setMemoria(MemoriaResultado memoria) {
         this.memoria = memoria;
     }
-    
+
+    public int getTotalCantidadSyscall() {
+        return totalCantidadSyscalls;
+    }
+
+    public void setTotalCantidadSyscalls(int totalCantidadSyscalls) {
+        this.totalCantidadSyscalls = totalCantidadSyscalls;
+    }
+
 }

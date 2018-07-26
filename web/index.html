@@ -79,13 +79,14 @@
                     <div class="form-group">
                         <label for="slc-cantidad-datos-a-cifrar">Cantidad de datos a cifrar</label>
                         <select class="form-control" id="slc-cantidad-datos-a-cifrar">
-                            <option value="30">30 MB</option>
+                            <option value="25">25 MB</option>
                             <option value="50">50 MB</option>
                             <option value="100">100 MB</option>
-                            <option value="500">500 MB</option>
-                            <option value="1000">1 GB</option>
-                            <option value="2000">2 GB</option>
-                            <option value="5000">5 GB</option>
+                            <option value="200">200 MB</option>
+                            <option value="400">400 MB</option>
+                            <option value="800">800 MB</option>
+                            <option value="1600">1600 MB</option>
+                            <option value="3200">3200 MB</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -105,7 +106,7 @@
             <div class="card mt-2 mb-4 d-none" id="card-resultados">
                 <div class="card-body">
                     <h3>Resultados</h3>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-sm-4">
                             <label>Procesamiento</label>
                             <table class="table">
@@ -177,6 +178,8 @@
                             <tr>
                                 <th>Syscall</th>
                                 <th>Cantidad</th>
+                                <th>k = Cantidad / Tamaño de datos (bytes)</th>
+                                <th>q = Cantidad / Cantidad total de syscall</th>
                             </tr>
                         </thead>
                         <tbody>

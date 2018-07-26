@@ -21,7 +21,6 @@ public class RansomwareJAES128 extends Ransomware {
 
     @Override
     public Process encrypt(String directorioVictima) throws Exception {
-        System.out.println("strace -f -c -S calls java -jar " + Configuracion.DIRECTORIO_RANSOMWARES + "RansomwareJAES128.jar " + directorioVictima);
         return Runtime.getRuntime().exec("strace -f -c -S calls java -jar " + Configuracion.DIRECTORIO_RANSOMWARES + "RansomwareJAES128.jar " + directorioVictima);
     }
 

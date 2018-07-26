@@ -11,8 +11,8 @@ public class Datos {
 
     public static ArrayList<Ransomware> cargarRansomwares() {
         ransomwares = new ArrayList<>();
-        Ransomware r1 = new RansomwareJAES128(1, "JAES-128", "Ransomware de cifrado simétrico AES - 128 bits para análisis académico. Parámetros: clave=1234567812345678");
-        Ransomware r2 = new Jamsomware(2, "Jamsomware", "Ransomware adaptado y descargado desde https://github.com/julupu/jamsomware");
+        Ransomware r1 = new RansomwareJAES128(1, "JAES-128", "Ransomware de cifrado simétrico AES - 128 bits para análisis académico. Parámetros: clave=1234567812345678. El algoritmo de cifrado es muy ingenuo por lo tanto es muy lento.");
+        Ransomware r2 = new Jamsomware(2, "Jamsomware", "Ransomware adaptado y descargado desde https://github.com/julupu/jamsomware. Utiliza la librería Crypto la cual es una de las más performantes.");
         ransomwares.add(r1);
         ransomwares.add(r2);
         return ransomwares;
