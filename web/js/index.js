@@ -49,11 +49,7 @@
         });
 
         // Funciones.
-        function Ransomware(id, nombre, descripcion) {
-            this.id = id;
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-        }
+        
 
         // Setup.
         $(document).ajaxStart(function (args) {
