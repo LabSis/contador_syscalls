@@ -22,7 +22,7 @@ public class ConexionBD {
 
     private String BD = "gestion_ransomware";
     private String USUARIO = "root";
-    private String CLAVE = "";
+    private String CLAVE = "12345678";
 
     private Connection connection;
 
@@ -170,7 +170,8 @@ public class ConexionBD {
                     + "FROM pruebas AS p INNER JOIN ransomwares AS r ON p.id_ransomware=r.id "
                     + "INNER JOIN disco_resultados AS d ON p.id=d.id_prueba "
                     + "INNER JOIN memoria_resultados AS m ON p.id=m.id_prueba "
-                    + "INNER JOIN procesamiento_resultados AS pro ON p.id=pro.id_prueba";
+                    + "INNER JOIN procesamiento_resultados AS pro ON p.id=pro.id_prueba "
+                    + "ORDER BY p.fecha_hora DESC";
             PreparedStatement psPruebas = this.connection.prepareStatement(consultaPruebas);
 
             String consultaSyscalls = "SELECT syscall,cantidad,k,q "

@@ -60,7 +60,7 @@ public abstract class Ransomware {
     public String toString() {
         return this.name;
     }
-
+    
     /**
      * 
      * @param directorioVictima directorio víctima. Se asume que el directorio existe y está sanitizado.

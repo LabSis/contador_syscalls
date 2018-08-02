@@ -3,6 +3,7 @@ package estadisticas;
 import datos.Resultado;
 import datos.SyscallResultado;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -25,8 +26,7 @@ public class Estadisticas {
         this.salidaResumidaStrace = "";
     }
 
-    public Resultado ejecutar(String directorioVictima) throws Exception {
-        Process proceso = ransomware.encrypt(directorioVictima);
+    protected Resultado generarResultado(Process proceso) throws IOException {
         InputStream stderr = proceso.getErrorStream();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(stderr));
@@ -57,9 +57,14 @@ public class Estadisticas {
                 return t1.getCantidad() - t.getCantidad();
             }
         });
+        System.out.println(syscalls);
         resultado.setSyscalls(syscalls);
-
         return resultado;
+    }
+
+    public Resultado ejecutar(String directorioVictima) throws Exception {
+        Process proceso = ransomware.encrypt(directorioVictima);
+        return generarResultado(proceso);
     }
 
     public ArrayList<SyscallResultado> getSyscalls(Resultado resultado) {
@@ -90,8 +95,10 @@ public class Estadisticas {
             String nombreSyscall = entradaSyscall.getKey();
             Integer cantidadSyscall = entradaSyscall.getValue();
             SyscallResultado syscallResultado = new SyscallResultado(nombreSyscall, cantidadSyscall);
-            double k = (double) cantidadSyscall / (double) cantidadDatosACifrarBytes;
-            syscallResultado.setK(k);
+            if (cantidadDatosACifrarBytes > 0) {
+                double k = (double) cantidadSyscall / (double) cantidadDatosACifrarBytes;
+                syscallResultado.setK(k);
+            }
             double q = (double) cantidadSyscall / (double) totalCantidadSyscalls;
             syscallResultado.setQ(q);
             syscalls.add(syscallResultado);

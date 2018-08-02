@@ -4,10 +4,13 @@ import ransomware.Jamsomware;
 import ransomware.Ransomware;
 import ransomware.RansomwareJAES128;
 import java.util.ArrayList;
+import programas.Ejecutable;
+import programas.LS;
 
 public class Datos {
 
     private static ArrayList<Ransomware> ransomwares;
+    private static ArrayList<Ejecutable> ejecutables;
 
     public static ArrayList<Ransomware> cargarRansomwares() {
         ransomwares = new ArrayList<>();
@@ -17,11 +20,27 @@ public class Datos {
         ransomwares.add(r2);
         return ransomwares;
     }
-    
-    public static Ransomware getRansomware(int id){
-        for(Ransomware ransomware : ransomwares) {
+
+    public static ArrayList<Ejecutable> cargarEjecutables() {
+        ejecutables = new ArrayList<>();
+        Ejecutable e1 = new LS(1, "ls a directorio raíz", "");
+        ejecutables.add(e1);
+        return ejecutables;
+    }
+
+    public static Ransomware getRansomware(int id) {
+        for (Ransomware ransomware : ransomwares) {
             if (ransomware.getId() == id) {
                 return ransomware;
+            }
+        }
+        return null;
+    }
+
+    public static Ejecutable getEjecutable(int id) {
+        for (Ejecutable ejecutable : ejecutables) {
+            if (ejecutable.getId() == id) {
+                return ejecutable;
             }
         }
         return null;

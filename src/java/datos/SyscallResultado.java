@@ -46,5 +46,12 @@ public class SyscallResultado {
     public void setQ(double q) {
         this.q = q;
     }
+
+    @Override
+    public String toString() {
+        return "SyscallResultado{" + "syscall=" + syscall + ", cantidad=" + cantidad + ", k=" + k + ", q=" + q + '}';
+    }
+    
+    
     
 }

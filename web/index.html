@@ -65,42 +65,62 @@
         <div class="container">
             <div class="card mt-2">
                 <div class="card-body">
-                    <h3>Ejecución</h3>
-                    <div class="form-group">
-                        <label for="slc-ransomware">Ransomware</label>
-                        <select id="slc-ransomware" class="form-control">
-                        </select>
-                        <small id="emailHelp" class="form-text text-muted"></small>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a data-toggle="tab" role="tab" class="nav-link" href="#ransomware">Ransomware</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" role="tab" class="nav-link" href="#otrosProgramas">Otros programas</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-4">
+                        <div id="ransomware" class="tab-pane fade in active">
+                            <div class="form-group">
+                                <label for="slc-ransomware">Ransomware</label>
+                                <select id="slc-ransomware" class="form-control">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txa-descripcion">Descripción</label>
+                                <textarea class="form-control" id="txa-descripcion" disabled="disabled"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="slc-cantidad-datos-a-cifrar">Cantidad de datos a cifrar</label>
+                                <select class="form-control" id="slc-cantidad-datos-a-cifrar">
+                                    <option value="25">25 MB</option>
+                                    <option value="50">50 MB</option>
+                                    <option value="100">100 MB</option>
+                                    <option value="200">200 MB</option>
+                                    <option value="400">400 MB</option>
+                                    <option value="800">800 MB</option>
+                                    <option value="1600">1600 MB</option>
+                                    <option value="3200">3200 MB</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="slc-cantidad-archivos">Cantidad de archivos</label>
+                                <select class="form-control" id="slc-cantidad-archivos">
+                                    <option value="10">10</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="1000">1000</option>
+                                </select>
+                            </div>
+                            <input type="checkbox" id="chk-dejar-archivos-creados" value="s" />
+                            <label for="chk-dejar-archivos-creados">Dejar archivos creados</label>
+                            <button type="button" class="btn btn-primary float-right" id="btn-cifrar">Cifrar</button>
+                        </div>
+                        <div id="otrosProgramas" class="tab-pane fade">
+                            <div class="form-group">
+                                <label for="slc-programa">Programa</label>
+                                <select id="slc-programa" class="form-control">
+                                    <option class="1">ls al directorio raíz</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary float-right" id="btn-ejecutar">Ejecutar</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="txa-descripcion">Descripción</label>
-                        <textarea class="form-control" id="txa-descripcion" disabled="disabled"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="slc-cantidad-datos-a-cifrar">Cantidad de datos a cifrar</label>
-                        <select class="form-control" id="slc-cantidad-datos-a-cifrar">
-                            <option value="25">25 MB</option>
-                            <option value="50">50 MB</option>
-                            <option value="100">100 MB</option>
-                            <option value="200">200 MB</option>
-                            <option value="400">400 MB</option>
-                            <option value="800">800 MB</option>
-                            <option value="1600">1600 MB</option>
-                            <option value="3200">3200 MB</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="slc-cantidad-archivos">Cantidad de archivos</label>
-                        <select class="form-control" id="slc-cantidad-archivos">
-                            <option value="10">10</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="1000">1000</option>
-                        </select>
-                    </div>
-                    <input type="checkbox" id="chk-dejar-archivos-creados" value="s" />
-                    <label for="chk-dejar-archivos-creados">Dejar archivos creados</label>
-                    <button type="button" class="btn btn-primary float-right" id="btn-cifrar">Cifrar</button>
                 </div>
             </div>
             <div class="card mt-2 mb-4 d-none" id="card-resultados">

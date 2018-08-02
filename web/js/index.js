@@ -54,8 +54,47 @@
             $("#txa-descripcion").val(ransomware.descripcion);
         });
 
+        $("#btn-ejecutar").click(function () {
+            $("#card-resultados").addClass("d-none");
+            var programa = $("#slc-programa option:selected").val();
+            $.ajax({
+                url: "/GestionRansomware/ControladorEjecutable",
+                type: "post",
+                data: {
+                    id_programa: programa,
+                },
+                success: function (r) {
+                    var $tblSyscalls = $("#tbl-syscalls tbody");
+                    $tblSyscalls.empty();
+                    $("#card-resultados").removeClass("d-none");
+                    var syscalls = r.syscalls;
+                    for (var i = 0; i < syscalls.length; i++) {
+                        var $trSyscall = $("<tr></tr>");
+                        var $tdNombreSyscall = $("<td></td>");
+                        var $tdCantidadSyscall = $("<td></td>");
+                        var $tdCantidadYTamanio = $("<td></td>");
+                        var $tdCantidadYCantidadTotal = $("<td></td>");
+
+                        var syscall = syscalls[i];
+                        $tdNombreSyscall.text(syscall.syscall);
+                        $tdCantidadSyscall.text(syscall.cantidad);
+                        $tdCantidadYTamanio.text(syscall.k);
+                        $tdCantidadYCantidadTotal.text(syscall.q);
+
+                        $trSyscall.append($tdNombreSyscall);
+                        $trSyscall.append($tdCantidadSyscall);
+                        $trSyscall.append($tdCantidadYTamanio);
+                        $trSyscall.append($tdCantidadYCantidadTotal);
+
+                        $tblSyscalls.append($trSyscall);
+                    }
+
+                }
+            });
+        });
+
         // Funciones.
-        
+
 
         // Setup.
         $(document).ajaxStart(function (args) {
