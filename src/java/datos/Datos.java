@@ -5,6 +5,7 @@ import ransomware.Ransomware;
 import ransomware.RansomwareJAES128;
 import java.util.ArrayList;
 import programas.Ejecutable;
+import programas.Find;
 import programas.LS;
 
 public class Datos {
@@ -24,7 +25,9 @@ public class Datos {
     public static ArrayList<Ejecutable> cargarEjecutables() {
         ejecutables = new ArrayList<>();
         Ejecutable e1 = new LS(1, "ls a directorio raíz", "");
+        Ejecutable e2 = new Find(2, "find a /var/www/html/", "");
         ejecutables.add(e1);
+        ejecutables.add(e2);
         return ejecutables;
     }
 

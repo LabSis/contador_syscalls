@@ -11,9 +11,4 @@ public class LS extends Ejecutable {
         return Runtime.getRuntime().exec("strace -f -c -S calls ls /");
     }
 
-    @Override
-    public int getId() {
-        return 1;
-    }
-
 }

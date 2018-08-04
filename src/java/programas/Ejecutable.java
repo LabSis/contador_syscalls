@@ -16,7 +16,9 @@ public abstract class Ejecutable {
         this.description = description;
     }
 
-    public abstract int getId();
+    public int getId() {
+        return this.id;
+    }
 
     public abstract Process ejecutar() throws Exception;
 }

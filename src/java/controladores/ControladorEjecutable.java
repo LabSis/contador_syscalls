@@ -27,7 +27,7 @@ import ransomware.Jamsomware;
  *
  * @author gochi
  */
-@WebServlet(name = "ControladorRansomware", urlPatterns = {"/ControladorEjecutable"})
+@WebServlet(name = "ControladorEjecutable", urlPatterns = {"/ControladorEjecutable"})
 public class ControladorEjecutable extends HttpServlet {
 
     /**
