@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import programas.Ejecutable;
 import programas.Find;
 import programas.LS;
+import programas.Spotify;
 
 public class Datos {
 
@@ -26,8 +27,10 @@ public class Datos {
         ejecutables = new ArrayList<>();
         Ejecutable e1 = new LS(1, "ls a directorio raíz", "");
         Ejecutable e2 = new Find(2, "find a /var/www/html/", "");
+        Ejecutable e3 = new Spotify(3, "spotify", "");
         ejecutables.add(e1);
         ejecutables.add(e2);
+        ejecutables.add(e3);
         return ejecutables;
     }
 
