@@ -4,6 +4,7 @@ import ransomware.Jamsomware;
 import ransomware.Ransomware;
 import ransomware.RansomwareJAES128;
 import java.util.ArrayList;
+import programas.ComprimirTar;
 import programas.Ejecutable;
 import programas.Find;
 import programas.LS;
@@ -28,9 +29,11 @@ public class Datos {
         Ejecutable e1 = new LS(1, "ls a directorio raíz", "");
         Ejecutable e2 = new Find(2, "find a /var/www/html/", "");
         Ejecutable e3 = new Spotify(3, "spotify", "");
+        Ejecutable e4 = new ComprimirTar(4, "Comprimir con TAR", "");
         ejecutables.add(e1);
         ejecutables.add(e2);
         ejecutables.add(e3);
+        ejecutables.add(e4);
         return ejecutables;
     }
 

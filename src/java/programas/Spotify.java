@@ -8,7 +8,6 @@ public class Spotify extends Ejecutable {
 
     @Override
     public Process ejecutar() throws Exception {
-        System.out.println("ok");
         return Runtime.getRuntime().exec("strace -f -c -S calls spotify");
     }
 
