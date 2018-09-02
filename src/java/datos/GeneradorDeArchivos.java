@@ -13,13 +13,13 @@ public class GeneradorDeArchivos {
     }
 
     public void generar(String directorio, long tamTotalMB, long cantidadArchivos) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        long tamPorArchivo = (tamTotalMB / cantidadArchivos) * 1000 * 1000;
+        long tamPorArchivo = (long) (((double) tamTotalMB / (double) cantidadArchivos) * 1000.0 * 1000.0);
         int cantidadCaracteresPorRenglon = 1000;
         for (int i = 1; i <= cantidadArchivos; i++) {
             RandomAccessFile f = new RandomAccessFile(directorio + "a" + i + ".txt", "rw");
             for (int j = 0; j < tamPorArchivo; j += cantidadCaracteresPorRenglon) {
                 String renglon = "";
-                for(int k = 0; k < cantidadCaracteresPorRenglon - 1; k++) {
+                for (int k = 0; k < cantidadCaracteresPorRenglon - 1; k++) {
                     int indice = (int) (Math.random() * (double) alfabeto.length);
                     renglon += alfabeto[indice];
                 }
