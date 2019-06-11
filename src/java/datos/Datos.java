@@ -9,7 +9,7 @@ import programas.Ejecutable;
 import programas.Find;
 import programas.LS;
 import programas.Spotify;
-import ransomware.RansomwareCryptSky;
+import ransomware.RansomwareRansPy;
 
 public class Datos {
 
@@ -20,7 +20,7 @@ public class Datos {
         ransomwares = new ArrayList<>();
         Ransomware r1 = new RansomwareJAES128(1, "JAES-128", "Ransomware de cifrado simétrico AES - 128 bits para análisis académico. Parámetros: clave=1234567812345678. El algoritmo de cifrado es muy ingenuo por lo tanto es muy lento.");
         Ransomware r2 = new Jamsomware(2, "Jamsomware", "Ransomware adaptado y descargado desde https://github.com/julupu/jamsomware. Utiliza la librería Crypto la cual es una de las más performantes.");
-        Ransomware r3 = new RansomwareCryptSky(3, "CryptSky", "Ransomware adaptado y descargado desde https://github.com/deadPix3l/CryptSky.");
+        Ransomware r3 = new RansomwareRansPy(3, "RansPy", "Ransomware adaptado y descargado desde https://github.com/marcosValle/RansPy.");
         ransomwares.add(r1);
         ransomwares.add(r2);
         ransomwares.add(r3);
